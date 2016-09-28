@@ -1,8 +1,19 @@
+require 'fixed_width_dsl'
+
 module SiapExporter
   TIPO_FACTURA = {'A'=>1}
   TIPO_ALICUOTA = {'21%'=>5}
 
   class ComprasVentas
+
+    AlicuotaVenta = FixedWidthDSL.define do
+      field :tipo_comprobante, 3, :integer, '0'
+      field :punto_de_venta,   5, :integer, '0'
+      field :factura,         20, :integer, '0'
+      field :gravado,         15, :integer, '0'
+      field :tipo_alicuota,    4, :integer, '0'
+      field :impuesto,        15, :integer, '0'
+    end
 
     def self.generate comprobantes
       new(comprobantes).generate
@@ -28,13 +39,12 @@ module SiapExporter
     private
 
     def alicuotas_venta comprobante
-      format '%03d%05d%020d%015d%04d%015d',
-        TIPO_FACTURA.fetch(comprobante[:tipo_factura]),
-        comprobante[:punto_de_venta],
-        comprobante[:factura],
-        comprobante[:gravado_21],
-        TIPO_ALICUOTA['21%'],
-        comprobante[:iva_21]
+      comprobante = comprobante.dup
+      comprobante[:tipo_comprobante] = TIPO_FACTURA[comprobante[:tipo_factura]]
+      comprobante[:gravado] = comprobante[:gravado_21]
+      comprobante[:tipo_alicuota] = TIPO_ALICUOTA['21%']
+      comprobante[:impuesto] = comprobante[:iva_21]
+      AlicuotaVenta.apply comprobante
     end
 
     def venta comprobante
@@ -64,4 +74,3 @@ module SiapExporter
     end
   end
 end
-
