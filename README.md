@@ -11,11 +11,11 @@ no está fijo aún)
 ```ruby
 comprobante = {
   fecha: '2016-07-04',
-  cliente: 'Tito Puente',
-  cuit: 27224686604,
-  tipo_factura: 'A',
+  denominacion_comprador: 'Tito Puente',
+  numero_identificacion_comprador: 27224686604,
+  tipo_comprobante: 'A',
   punto_de_venta: 4,
-  numero: 1220,
+  numero_comprobante: 1220,
   gravado_21: 144950,
   iva_21: 30440,
   no_gravado: 1873400,
