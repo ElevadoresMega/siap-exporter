@@ -1,7 +1,11 @@
 require 'fixed_width_dsl'
 
 module SiapExporter
-  TIPO_COMPROBANTE = {'A'=>1}
+  TIPO_COMPROBANTE = {
+    'A'   => 1,
+    'B'   => 6,
+    'NCA' => 3
+  }
   TIPO_ALICUOTA = {'21%'=>5}
 
   class ComprasVentas
@@ -65,7 +69,7 @@ module SiapExporter
 
     def alicuotas_venta comprobante
       comprobante = comprobante.merge(
-        tipo_comprobante: TIPO_COMPROBANTE[comprobante[:tipo_comprobante]],
+        tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         gravado: comprobante[:gravado_21],
         tipo_alicuota: TIPO_ALICUOTA['21%'],
         impuesto: comprobante[:iva_21])
@@ -75,7 +79,7 @@ module SiapExporter
     def venta comprobante
       comprobante = comprobante.merge(
         fecha: comprobante[:fecha].gsub('-', ''),
-        tipo_comprobante: TIPO_COMPROBANTE[comprobante[:tipo_comprobante]],
+        tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         numero_comprobante_hasta: comprobante[:numero_comprobante],
         codigo_documento_comprador: 80,
         total: comprobante[:total],
@@ -91,6 +95,10 @@ module SiapExporter
         otros_tributos: 0,
         vencimiento_de_pago: 0)
       Venta.apply comprobante
+    end
+
+    def tipo_comprobante tipo
+      TIPO_COMPROBANTE.fetch(tipo)
     end
   end
 end
