@@ -6,7 +6,10 @@ module SiapExporter
     'B'   => 6,
     'NCA' => 3
   }
-  TIPO_ALICUOTA = {'21%'=>5}
+  TIPO_ALICUOTA = {
+    5 => [:gravado_21, :iva_21],
+    4 => [:gravado_10, :iva_10]
+  }
 
   class ComprasVentas
 
@@ -56,8 +59,10 @@ module SiapExporter
 
     def generate
       @comprobantes.each do |comprobante|
-        @ventas << venta(comprobante)
-        @alicuotas_ventas << alicuotas_venta(comprobante)
+        # las alicuotas se deben generar antes que la venta, porque la
+        # cantidad se indica en el registro de venta
+        alicuotas_venta(comprobante)
+        venta(comprobante)
       end
       {
         ventas: @ventas.join("\n"),
@@ -68,12 +73,19 @@ module SiapExporter
     private
 
     def alicuotas_venta comprobante
-      comprobante = comprobante.merge(
-        tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
-        gravado: comprobante[:gravado_21],
-        tipo_alicuota: TIPO_ALICUOTA['21%'],
-        impuesto: comprobante[:iva_21])
-      AlicuotaVenta.apply comprobante
+      comprobante[:cantidad_de_alicuotas] = 0
+      TIPO_ALICUOTA.each do |id, claves|
+        gravado = comprobante[claves[0]]
+        if gravado
+          alicuota = comprobante.merge(
+            tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
+            gravado: gravado,
+            tipo_alicuota: id,
+            impuesto: comprobante[claves[1]])
+          @alicuotas_ventas << AlicuotaVenta.apply(alicuota)
+          comprobante[:cantidad_de_alicuotas] += 1
+        end
+      end
     end
 
     def venta comprobante
@@ -90,11 +102,10 @@ module SiapExporter
         impuestos_internos: 0,
         moneda: 'PES',
         cambio: 1000000,
-        cantidad_de_alicuotas: 1,
         codigo_de_operacion: 0,
         otros_tributos: 0,
         vencimiento_de_pago: 0)
-      Venta.apply comprobante
+      @ventas << Venta.apply(comprobante)
     end
 
     def tipo_comprobante tipo
