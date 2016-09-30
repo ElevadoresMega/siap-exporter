@@ -1,6 +1,4 @@
-$LOAD_PATH << File.join(__dir__, '../lib')
-
-require 'siap_exporter'
+require_relative '../lib/siap_exporter'
 
 comprobantes = [{
   fecha: '2016-07-04',
@@ -24,21 +22,7 @@ alicuotas_ventas = <<SIAP.chomp
 00100004000000000000000012200000000001449500005000000000030440
 SIAP
 
-def assert_equal expected, actual, description = nil
-  passed = expected == actual
-  result = (passed ? 'ok' : 'not ok')
-  puts "#{ result } - #{ description }"
-  unless passed
-    puts "# Expected:"
-    expected.each_line { |line| puts "# #{ line }" }
-    puts "# Actual:"
-    actual.each_line { |line| puts "# #{ line }" }
-    exit_code = 1
-  end
-end
-
 files = SiapExporter::ComprasVentas.generate(comprobantes)
 
-assert_equal ventas, files[:ventas], 'produce ventas'
-assert_equal alicuotas_ventas, files[:alicuotas_ventas],
-  'produce alicuotas de ventas'
+assert_equal ventas, files[:ventas]
+assert_equal alicuotas_ventas, files[:alicuotas_ventas]
