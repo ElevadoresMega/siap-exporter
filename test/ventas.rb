@@ -13,19 +13,23 @@ comprobante = {
   exento: 1765741
 }
 
+def generate comprobante
+  SiapExporter::ComprasVentas.generate([comprobante])
+end
+
 scope 'factura b' do
   factura_b = comprobante.merge(tipo_comprobante: 'B')
-  venta = SiapExporter::ComprasVentas.generate([factura_b])[:ventas]
+  venta = generate(factura_b)[:ventas]
   assert venta.match('006'), 'Factura B funciona'
 end
 
 scope 'nota de credito' do 
   nca = comprobante.merge(tipo_comprobante: 'NCA')
-  venta = SiapExporter::ComprasVentas.generate([nca])[:ventas]
+  venta = generate(nca)[:ventas]
   assert venta.match('003'), 'Nota Credito A funciona'
 end
 
 scope 'calcula el total' do
-  venta = SiapExporter::ComprasVentas.generate([comprobante])[:ventas]
+  venta = generate(comprobante)[:ventas]
   assert venta.match('3814531'), 'calcula el total'
 end
