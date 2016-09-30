@@ -82,7 +82,7 @@ module SiapExporter
         tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         numero_comprobante_hasta: comprobante[:numero_comprobante],
         codigo_documento_comprador: 80,
-        total: comprobante[:total],
+        total: total(comprobante),
         no_categorizados: 0,
         impuestos_nacionales: 0,
         ingresos_brutos: 0,
@@ -99,6 +99,11 @@ module SiapExporter
 
     def tipo_comprobante tipo
       TIPO_COMPROBANTE.fetch(tipo)
+    end
+
+    def total comprobante
+      comprobante.values_at(:gravado_21, :iva_21, :gravado_10, :iva_10,
+                             :no_gravado, :exento).compact.reduce(0, :+)
     end
   end
 end

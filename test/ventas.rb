@@ -10,8 +10,7 @@ comprobante = {
   gravado_21: 144950,
   iva_21: 30440,
   no_gravado: 1873400,
-  exento: 1765741,
-  total: 3814531
+  exento: 1765741
 }
 
 scope 'factura b' do
@@ -24,4 +23,9 @@ scope 'nota de credito' do
   nca = comprobante.merge(tipo_comprobante: 'NCA')
   venta = SiapExporter::ComprasVentas.generate([nca])[:ventas]
   assert venta.match('003'), 'Nota Credito A funciona'
+end
+
+scope 'calcula el total' do
+  venta = SiapExporter::ComprasVentas.generate([comprobante])[:ventas]
+  assert venta.match('3814531'), 'calcula el total'
 end
