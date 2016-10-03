@@ -1,4 +1,5 @@
 require 'fixed_width_dsl'
+require 'date'
 
 module SiapExporter
   TIPO_COMPROBANTE = {
@@ -175,6 +176,7 @@ module SiapExporter
 
     def compra comprobante
       comprobante = comprobante.merge(
+        fecha: Date.parse(comprobante[:fecha]).strftime('%Y%m%d'),
         tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         despacho_importacion: '',
         codigo_documento_vendedor: 80,
