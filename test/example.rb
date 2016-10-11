@@ -21,6 +21,8 @@ comprobantes = [{
   numero_comprobante: 44391,
   gravado_21: 177856,
   iva_21: 37350,
+  gravado_10: 0,
+  iva_10: 0,
   no_gravado: 2057422,
   exento: 16,
 }]

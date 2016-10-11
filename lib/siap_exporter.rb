@@ -125,7 +125,7 @@ module SiapExporter
       comprobante[:cantidad_de_alicuotas] = 0
       TIPO_ALICUOTA.each do |id, claves|
         gravado = comprobante[claves[0]]
-        if gravado
+        if gravado and gravado > 0
           alicuota = comprobante.merge(
             tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
             gravado: gravado,
@@ -161,7 +161,7 @@ module SiapExporter
       comprobante[:cantidad_de_alicuotas] = 0
       TIPO_ALICUOTA.each do |id, claves|
         gravado = comprobante[claves[0]]
-        if gravado
+        if gravado && gravado > 0
           alicuota = comprobante.merge(
             codigo_documento_vendedor: 80,
             tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
