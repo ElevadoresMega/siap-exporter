@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'siap_exporter'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.summary     = 'Exporta archivos para el SIAp de AFIP'
   s.description = 'Ayuda a generar archivos para poder ser importados en' \
                   'el siap desde ruby.'
