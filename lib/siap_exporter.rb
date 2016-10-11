@@ -112,10 +112,10 @@ module SiapExporter
         end
       end
       {
-        ventas: @ventas.join("\n"),
-        alicuotas_ventas: @alicuotas_ventas.join("\n"),
-        compras: @compras.join("\n"),
-        alicuotas_compras: @alicuotas_compras.join("\n")
+        ventas: @ventas.join("\r\n"),
+        alicuotas_ventas: @alicuotas_ventas.join("\r\n"),
+        compras: @compras.join("\r\n"),
+        alicuotas_compras: @alicuotas_compras.join("\r\n")
       }
     end
 
