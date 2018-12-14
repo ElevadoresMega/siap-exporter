@@ -5,7 +5,8 @@ module SiapExporter
   TIPO_COMPROBANTE = {
     'A'   => 1,
     'B'   => 6,
-    'NCA' => 3
+    'NCA' => 3,
+    'NCB' => 8
   }
   TIPO_ALICUOTA = {
     5 => [:gravado_21, :iva_21],
