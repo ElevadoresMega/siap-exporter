@@ -147,7 +147,7 @@ module SiapExporter
         fecha: comprobante[:fecha].gsub('-', ''),
         tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         numero_comprobante_hasta: comprobante[:numero_comprobante],
-        codigo_documento_comprador: tipo_doumento(comprobante[:codigo_documento_comprador]),
+        codigo_documento_comprador: tipo_documento(comprobante[:codigo_documento_comprador]),
         total: total(comprobante),
         no_categorizados: 0,
         impuestos_nacionales: 0,
