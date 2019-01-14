@@ -12,6 +12,10 @@ module SiapExporter
     5 => [:gravado_21, :iva_21],
     4 => [:gravado_10, :iva_10]
   }
+  TIPO_DOCUMENTO = {
+   'DNI' => 96,
+   'CUIT' =>  80 
+  }
 
   class ComprasVentas
 
@@ -143,7 +147,7 @@ module SiapExporter
         fecha: comprobante[:fecha].gsub('-', ''),
         tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
         numero_comprobante_hasta: comprobante[:numero_comprobante],
-        codigo_documento_comprador: 80,
+        codigo_documento_comprador: tipo_doumento(comprobante[:codigo_documento_comprador]),
         total: total(comprobante),
         no_categorizados: 0,
         impuestos_nacionales: 0,
