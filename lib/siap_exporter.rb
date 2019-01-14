@@ -208,6 +208,10 @@ module SiapExporter
       TIPO_COMPROBANTE.fetch(tipo)
     end
 
+    def tipo_documento tipo
+      TIPO_DOCUMENTO.fetch(tipo)
+    end
+
     def total comprobante
       comprobante.values_at(:gravado_21, :iva_21, :gravado_10, :iva_10,
                              :no_gravado, :exento).compact.reduce(0, :+)
