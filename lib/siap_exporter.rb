@@ -6,14 +6,16 @@ module SiapExporter
     ## PARA VENTAS ##
     'A'   => 1,
     'B'   => 6,
-    'C' => ,#TODO"
+    'C' => 11,
     'NCA' => 3,
     'NCB' => 8, 
-    'NCC' => ,#TODO"
-    'NDA' => ,#TODO"
-    'NDB' => ,#TODO"
-    'NDC' => ,#TODO"
-    'INVOICES_EXTERIOR' => 6
+    'NCC' => 13,
+    'NDA' => 2,
+    'NDB' => 7,
+    'NDC' => 12,
+    'INVOICES_EXTERIOR' => 87,
+    'TFA' => 81,
+    'TFB' => 82
   }
 
   TIPO_ALICUOTA = {
