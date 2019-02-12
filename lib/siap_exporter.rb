@@ -3,15 +3,24 @@ require 'date'
 
 module SiapExporter
   TIPO_COMPROBANTE = {
+    ## PARA VENTAS ##
     'A'   => 1,
     'B'   => 6,
+    'C' => ,#TODO"
     'NCA' => 3,
-    'NCB' => 8
+    'NCB' => 8, 
+    'NCC' => ,#TODO"
+    'NDA' => ,#TODO"
+    'NDB' => ,#TODO"
+    'NDC' => ,#TODO"
+    'INVOICES_EXTERIOR' => 6
   }
+
   TIPO_ALICUOTA = {
     5 => [:gravado_21, :iva_21],
     4 => [:gravado_10, :iva_10]
   }
+
   TIPO_DOCUMENTO = {
    'DNI' => 96,
    'CUIT' =>  80 
@@ -183,22 +192,15 @@ module SiapExporter
       comprobante = comprobante.merge(
         fecha: Date.parse(comprobante[:fecha]).strftime('%Y%m%d'),
         tipo_comprobante: tipo_comprobante(comprobante[:tipo_comprobante]),
-        despacho_importacion: '',
         codigo_documento_vendedor: 80,
-        total: total(comprobante),
-        a_cuenta_iva: 0,
-        impuestos_nacionales: 0,
-        ingresos_brutos: 0,
-        impuestos_municipales: 0,
-        impuestos_internos: 0,
-        moneda: 'PES',
-        cambio: 1000000,
-        codigo_de_operacion: 0,
-        credito_fiscal: 0,
-        otros_tributos: 0,
+        total: total(comprobante), 
+        codigo_de_operacion: 0, 
+        ### SOLO PARA DESPACHOS DEFAULT 0 ##
+        despacho_importacion: '',
         cuit_emisor_corredor: 0,
         denominacion_emisor_corredor: '',
         iva_comision: 0
+        ### SOLO PARA DESPACHOS DEFAULT 0 ##
       )
       @compras << Compra.apply(comprobante)
     end

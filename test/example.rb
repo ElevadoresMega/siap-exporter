@@ -25,6 +25,16 @@ comprobantes = [{
   iva_10: 0,
   no_gravado: 2057422,
   exento: 16,
+  ## ESTOS CAMPOS TAMBIEN PUEDEN CAMBIAR ##
+  moneda: 'PES',
+  cambio: 1000000, 
+  a_cuenta_iva: 0, 
+  impuestos_nacionales: 0,
+  ingresos_brutos: 0,
+  impuestos_municipales: 0,
+  impuestos_internos: 0,
+  credito_fiscal: 0, 
+  otros_tributos: 0
 }]
 
 compras = <<SIAP.chomp
