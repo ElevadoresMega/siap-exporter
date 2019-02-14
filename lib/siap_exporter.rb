@@ -218,7 +218,9 @@ module SiapExporter
 
     def total comprobante
       comprobante.values_at(:gravado_21, :iva_21, :gravado_10, :iva_10,
-                             :no_gravado, :exento, :no_alcanzado).compact.reduce(0, :+)
+                             :no_gravado, :exento, :no_alcanzado, :ingresos_brutos, 
+                             :impuestos_municipales, :impuestos_internos, :impuestos_nacionales,
+                             :a_cuenta_iva, :otros_tributos).compact.reduce(0, :+)
     end
   end
 end
