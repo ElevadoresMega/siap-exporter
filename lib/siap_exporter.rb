@@ -20,7 +20,8 @@ module SiapExporter
 
   TIPO_ALICUOTA = {
     5 => [:gravado_21, :iva_21],
-    4 => [:gravado_10, :iva_10]
+    4 => [:gravado_10, :iva_10],
+    6 => [:gravado_27, :iva_27]
   }
 
   TIPO_DOCUMENTO = {
@@ -217,7 +218,7 @@ module SiapExporter
     end
 
     def total comprobante
-      comprobante.values_at(:gravado_21, :iva_21, :gravado_10, :iva_10,
+      comprobante.values_at(:gravado_27, :iva_27, :gravado_21, :iva_21, :gravado_10, :iva_10,
                              :no_gravado, :exento, :no_alcanzado, :ingresos_brutos, 
                              :impuestos_municipales, :impuestos_internos, :impuestos_nacionales,
                              :a_cuenta_iva, :otros_tributos).compact.reduce(0, :+)
